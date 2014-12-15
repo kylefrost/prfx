@@ -80,6 +80,15 @@ char *read_line(FILE *fin) {
     return NULL;
 }
 
+char *prfxTransform(char *line) {
+
+    return NULL;
+}
+
+char *prfxTransition(char *line) {
+
+    return NULL;
+}
 
 int main(int argc, char *argv[]) {
     
@@ -98,6 +107,7 @@ int main(int argc, char *argv[]) {
 
     // Search through file for lines containing transform and transition
     FILE *css;
+    FILE *new;
     char *line;    
     
     char *transform = "transform";
@@ -107,31 +117,37 @@ int main(int argc, char *argv[]) {
     css = fopen(argv[1], "r");
 
     // Create file name for new file containing prfx's
-    char *newFile = concat(newFilePrfx, argv[1]);
+    char *newFileName = concat(newFilePrfx, argv[1]);
     
     // Loop through and print containing lines
     if (css) {
+
+        new = fopen(newFileName, "w");
+
         while ((line = read_line(css))) {
             
             // If contains transform
             if (strstr(line, transform)) {
                 printf("Found transform line:\n%s\n", line);
+                char *transformPrfx = prfxTransform(line);
             }
             // If contains transition
             else if (strstr(line, transition)) {
                 printf("Found transition line:\n%s\n", line);
+                char *transitionPrfx = prfxTransition(line);
             }
             // Contains neither
             else {
-
+                fprintf(new, "%s\n", line);
             }
 
             free(line);
         }
     }
 
-    // Close file
+    // Close files
     fclose(css);
+    fclose(new);
 
     return 0;
 }
