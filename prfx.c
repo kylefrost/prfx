@@ -98,6 +98,10 @@ int main(int argc, char *argv[]) {
                 printf("%s\n", line);
             }
 
+            if (strstr(line, transition)) {
+                printf("%s\n", line);
+            }
+
             free(line);
         }
     }
