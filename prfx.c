@@ -9,7 +9,7 @@
  *               in CSS file and add browser specific 
  *               prefixes (i.e. -webkit-, -moz-, -ms-).
  *
- *  Usage:       prfx style.css
+ *  Usage:       prfx <filename>
  *
  */
 
@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
     
     if (strcmp(argv[1], "-v") == 0) {
         float vers = version();
-        printf("PRFX version %.01f\n", vers);
+        printf("PRFX version %.01f\nCopyright (c) Kyle Frost\n", vers);
         exit(1);
     }
 
@@ -43,12 +43,11 @@ int main(int argc, char *argv[]) {
     css = fopen(argv[1], "r+");
 
     if (css == 0) {
-        printf("Could not open file: %s.\n", argv[1]);
+        printf("Could not open file named \"%s\". Make sure it exists and was typed correctly.\n", argv[1]);
         exit(1);
     }
-    else {
-        fclose(css);
-    }
-            
+
+    
+
     return 0;
 }
