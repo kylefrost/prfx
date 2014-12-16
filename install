@@ -1,4 +1,5 @@
-#!/System/Library/Frameworks/Ruby.framework/Versions/Current/usr/bin/ruby
+#!/usr/bin/env ruby
+# encoding: utf-8
 
 PRFX_REPO = 'https://github.com/kylefrost/prfx'
 PRFX_DIR = '/usr/local/bin'
