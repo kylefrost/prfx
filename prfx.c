@@ -48,7 +48,7 @@ void showInfo() {
     printf("Output:\n");
     printf("    prfxd_<filename>.css\n");
     printf("\n");
-    printf("Params:\n");
+    printf("Options:\n");
     printf("    -v, --version     Shows version\n");
     printf("    -h, --help        Shows this help\n");
     printf("\n");
