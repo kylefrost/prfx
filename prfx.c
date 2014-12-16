@@ -5,12 +5,12 @@
  *  By:          Kyle Frost
  *  Created:     10/15/2014
  *
- *  Description: Command line too that finds all
+ *  Description: Command line tool that finds all
  *               'transform' and 'transition' modifiers 
  *               in CSS file and add browser specific 
  *               prefixes (i.e. -webkit-, -moz-, -ms-).
  *
- *  Usage:       prfx <filename>
+ *  Usage:       prfx <filename>.css
  *
  ***********************************************************/
 
@@ -47,6 +47,10 @@ void showInfo() {
     printf("\n");
     printf("Output:\n");
     printf("    prfxd_<filename>.css\n");
+    printf("\n");
+    printf("Params:\n");
+    printf("    -v, --version     Shows version\n");
+    printf("    -h, --help        Shows this help\n");
     printf("\n");
     printf("Notes:\n");
     printf("    prfx can only take one file\n");
@@ -179,9 +183,15 @@ int main(int argc, char *argv[]) {
     }
     
     // If arg is -v show version information
-    if (strcmp(argv[1], "-v") == 0) {
+    if (strcmp(argv[1], "-v") == 0 || strcmp(argv[1], "--version") == 0) {
         float vers = version();
         printf("PRFX version %.01f\nCopyright (c) Kyle Frost\n", vers);
+        exit(1);
+    }
+
+    // If arg is -h show help
+    if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0) {
+        showInfo();
         exit(1);
     }
 
