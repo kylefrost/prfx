@@ -90,9 +90,9 @@ if Dir["#{PRFX_DIR}/prfx"].empty?
   system "/usr/bin/sudo -v"
 end
 
-Dir.chdir /usr/local/bin do
+Dir.chdir PRFX_DIR  do
     ohai "Downloading and installing PRFX..."
-    system "/usr/bin/curl -fsSL -O -s https://github.com/kylefrost/prfx/raw/master/prfx"
+    system "/usr/bin/curl -fsSL -O -s https://raw.github.com/kylefrost/prfx/master/prfx"
     ohai "Setting permissions..."
     system "/bin/chmod a+x prfx"
 end
