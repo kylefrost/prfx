@@ -1,5 +1,17 @@
-#!/bin/bash
+#!/usr/bin/ruby
 
-echo "Downloading prfx binary"
-curl -O -s https://github.com/kylefrost/prfx/raw/master/prfx /usr/local/bin/prfx
+def ohai *args
+    puts "#{Tty.blue}==>#{Tty.white} #{args.shell_s}#{Tty.reset}"
+end
 
+def system *args
+    abort "Failed during: #{args.shell_s}" unless Kernel.system(*args)
+end
+
+
+Dir.chdir /usr/local/bin do
+    ohai "Downloading and installing PRFX..."
+    system "/usr/bin/curl -fsSL -O -s https://github.com/kylefrost/prfx/raw/master/prfx"
+    ohai "Setting permissions..."
+    system "/bin/chmod a+x prfx"
+end
