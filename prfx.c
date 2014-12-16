@@ -28,11 +28,31 @@
 char *newFilePrfx = "prfxd_";
 
 void usage(char *program) {
+    printf("\n");
+    printf("Stop being dumb.\n");
     printf("Usage: %s <filename>\n", program);
+    printf("\n");
 }
 
 float version() {
     return 1.0;
+}
+
+void showInfo() {
+    printf("\n");
+    printf("Really not that hard to use, but okay...\n");
+    printf("\n");
+    printf("Usage:\n");
+    printf("    prfx <filename>.css\n");
+    printf("\n");
+    printf("Output:\n");
+    printf("    prfxd_<filename>.css\n");
+    printf("\n");
+    printf("Notes:\n");
+    printf("    prfx can only take one file\n");
+    printf("    at a time. Passing more will simply\n");
+    printf("    tell you you are dumb for trying.\n");
+    printf("\n");
 }
 
 char *concat(char *s1, char *s2) {
@@ -80,18 +100,78 @@ char *read_line(FILE *fin) {
     return NULL;
 }
 
-char *prfxTransform(char *line) {
+char *addPrefixes(char *modifier, char *attrs) {
+    
+    char *new;
+    char *webkit = "    -webkit-";
+    char *moz = "    -moz-";
+    char *ms = "    -ms-";
+    char *o = "    -o-";
+    char *orig = "    ";
+
+    orig = concat(orig, modifier);
+    webkit = concat(webkit, modifier);
+    moz = concat(moz, modifier);
+    ms = concat(ms, modifier);
+    o = concat(o, modifier);
+
+    orig = concat(orig, attrs);
+    webkit = concat(webkit, attrs);
+    moz = concat(moz, attrs);
+    ms = concat(ms, attrs);
+    o = concat(o, attrs);
+
+    orig = concat(orig, ";\n");
+    webkit = concat(webkit, ";\n");
+    moz = concat(moz, ";\n");
+    ms = concat(ms, ";\n");
+    o = concat(o, ";\n");
+
+    new = concat(orig, webkit);
+    new = concat(new, moz);
+    new = concat(new, ms);
+    new = concat(new, o);
+
+    if (new) {
+        return new;
+    }
 
     return NULL;
 }
 
-char *prfxTransition(char *line) {
+char *prfx(char *line, char *modifier) {
+    
+    char *target = NULL;
+    char *start, *end;
+    char *newString;
 
+    if ((start = strstr(line, modifier))) {
+        start += strlen(modifier);
+
+        if ((end = strstr(start, ";"))) {
+            target = (char *)malloc(end-start+1);
+            memcpy(target, start, end-start);
+            concat(target, "\0");
+        }
+    }
+
+    if (target) {
+        newString = addPrefixes(modifier, target);
+        return newString;
+    }
+    
+    free(target);
     return NULL;
 }
 
 int main(int argc, char *argv[]) {
     
+    // Show info if no args
+    if (argc == 1) {
+        showInfo();
+        exit(1);
+    }
+
     // Make sure arguments are in right amount
     if (argc != 2) {
         usage(argv[0]);
@@ -129,18 +209,20 @@ int main(int argc, char *argv[]) {
             // If contains transform
             if (strstr(line, transform)) {
                 printf("Found transform line:\n%s\n", line);
-                char *transformPrfx = prfxTransform(line);
+                char *transformPrfx = prfx(line, transform);
+                fprintf(new, "%s", transformPrfx);
             }
             // If contains transition
             else if (strstr(line, transition)) {
                 printf("Found transition line:\n%s\n", line);
-                char *transitionPrfx = prfxTransition(line);
+                char *transitionPrfx = prfx(line, transition);
+                fprintf(new, "%s", transitionPrfx);
             }
             // Contains neither
             else {
                 fprintf(new, "%s\n", line);
             }
-
+            // Release line otherwise shit hits the fan
             free(line);
         }
     }

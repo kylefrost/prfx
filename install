@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "Downloading prfx binary"
+curl -O -s https://github.com/kylefrost/prfx/raw/master/prfx /usr/local/bin/prfx
+
