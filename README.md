@@ -14,6 +14,13 @@ ruby -e "$(curl -fsSL https://raw.github.com/kylefrost/prfx/master/install)"
 ```
 
 ### How to Uninstall
+#### Automagically
+Run this in **Terminal.app** or your favorite terminal application.
+```bash
+sudo rm /usr/local/bin/prfx
+```
+<br>
+#### Manually
 1. Go to /usr/local/bin
 2. Remove prfx binary
 
