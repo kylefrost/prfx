@@ -18,6 +18,8 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include <stdbool.h>
+#include <unistd.h>
 
 #ifdef DEBUG
 #define INITIAL_ALLOC 2
@@ -28,6 +30,13 @@
 char *newFilePrfx = "prfxd_";
 int s;
 
+char *concat(char *s1, char *s2) {
+    char *result = malloc(strlen(s1)+strlen(s2)+1);
+    strcpy(result, s1);
+    strcat(result, s2);
+    return result;
+}
+
 void usage(char *program) {
     printf("\n");
     printf("Stop being dumb.\n");
@@ -36,7 +45,11 @@ void usage(char *program) {
 }
 
 float version() {
-    return 1.1;
+    return 1.2;
+}
+
+char *versionChar() {
+    return "1.2";
 }
 
 void showInfo() {
@@ -52,19 +65,13 @@ void showInfo() {
     printf("Options:\n");
     printf("    -v, --version     Shows version\n");
     printf("    -h, --help        Shows this help\n");
+    printf("    update            Checks if an update is available and installs if necassary\n");
     printf("\n");
     printf("Notes:\n");
     printf("    prfx can only take one file\n");
     printf("    at a time. Passing more will simply\n");
     printf("    tell you you are dumb for trying.\n");
     printf("\n");
-}
-
-char *concat(char *s1, char *s2) {
-    char *result = malloc(strlen(s1)+strlen(s2)+1);
-    strcpy(result, s1);
-    strcat(result, s2);
-    return result;
 }
 
 char *read_line(FILE *fin) {
@@ -103,6 +110,52 @@ char *read_line(FILE *fin) {
         }
     }
     return NULL;
+}
+
+char *getCurrentFolder() {
+    
+    static char cwdir[1024];
+
+    if (getcwd(cwdir, sizeof(cwdir)) != NULL) {
+        return cwdir;
+    }
+
+    return NULL;
+}
+
+bool checkForUpdate() {
+
+    char cwd[1024];
+
+    if (getcwd(cwd, sizeof(cwd)) != NULL) {
+
+        FILE *versionFile;
+        char *buff;
+
+        system("mkdir ~/.prfx_tmp/");
+        system("cd ~/.prfx_tmp/");
+        system("curl -OLs https://raw.githubusercontent.com/kylefrost/prfx/master/version.txt");
+        
+        versionFile = fopen("version.txt", "r");
+
+        char *currentVersion = read_line(versionFile);
+        
+        char *command = concat("cd ", cwd);
+        fclose(versionFile);
+        system(command);
+        system("rm -rf ~/.prfx_tmp/");
+
+        if ((strcmp(currentVersion, versionChar()))) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    else {
+        perror("Error 1: Could not get current directory");
+    }
+
+    return false;
 }
 
 void getLeadingWhitespace(char *line) {
@@ -187,7 +240,6 @@ char *prfx(char *line, char *modifier) {
             s = 4;
             newString = addPrefixes(s, modifier, target);
         }
-        //newString = addPrefixes(modifier, target);
         return newString;
     }
     
@@ -220,6 +272,25 @@ int main(int argc, char *argv[]) {
     if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0) {
         showInfo();
         exit(1);
+    }
+
+    if (strcmp(argv[1], "update") == 0) {
+        bool needsUpdate = checkForUpdate();
+        if (!needsUpdate) {
+            // Update
+            printf("\nThere is an update available!\n\n");
+            system("cd /usr/local/bin/");
+            printf("Updating prfx...\n");
+            system("sudo -v");
+            system("/usr/bin/curl -fsSL -O -s https://raw.github.com/kylefrost/prfx/master/prfx");
+            system("/bin/chmod a+x prfx");
+            printf("\n\nprfx has been updated.\n\n");
+            char *command = concat("cd ", getCurrentFolder());
+            system(command);
+        } else {
+            // No updates
+            printf("\nThere are no updates available.\n\n");
+        }
     }
 
     // Search through file for lines containing transform and transition
