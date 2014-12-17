@@ -26,6 +26,7 @@
 #endif
 
 char *newFilePrfx = "prfxd_";
+int s;
 
 void usage(char *program) {
     printf("\n");
@@ -35,7 +36,7 @@ void usage(char *program) {
 }
 
 float version() {
-    return 1.0;
+    return 1.1;
 }
 
 void showInfo() {
@@ -104,14 +105,33 @@ char *read_line(FILE *fin) {
     return NULL;
 }
 
-char *addPrefixes(char *modifier, char *attrs) {
-    
+void getLeadingWhitespace(char *line) {
+
+    char keys[] = "abcdefghijklmnopqrstuvwxyz1234567890";
+    int i;
+    i = strcspn(line, keys);
+    s = i;
+}
+
+char *addPrefixes(int p, char *modifier, char *attrs) {
+
     char *new;
-    char *webkit = "    -webkit-";
-    char *moz = "    -moz-";
-    char *ms = "    -ms-";
-    char *o = "    -o-";
-    char *orig = "    ";
+    char *tabs = "";
+    char *webkit = "-webkit-";
+    char *moz = "-moz-";
+    char *ms = "-ms-";
+    char *o = "-o-";
+    char *orig = "";
+
+    for (int i = 0; i < p; i++) {
+        tabs = concat(" ", tabs);
+    }
+
+    orig = concat(tabs, orig);
+    webkit = concat(tabs, webkit);
+    moz = concat(tabs, moz);
+    ms = concat(tabs, ms);
+    o = concat(tabs, o);
 
     orig = concat(orig, modifier);
     webkit = concat(webkit, modifier);
@@ -160,7 +180,14 @@ char *prfx(char *line, char *modifier) {
     }
 
     if (target) {
-        newString = addPrefixes(modifier, target);
+        getLeadingWhitespace(line);
+        if (s) {
+            newString = addPrefixes(s, modifier, target);
+        } else {
+            s = 4;
+            newString = addPrefixes(s, modifier, target);
+        }
+        //newString = addPrefixes(modifier, target);
         return newString;
     }
     

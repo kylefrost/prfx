@@ -1,11 +1,11 @@
 .classOne {
-  transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
 .classTwo {
-  transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 .classThree {
-  transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out;
 }
