@@ -45,11 +45,11 @@ void usage(char *program) {
 }
 
 float version() {
-    return 1.3;
+    return 1.4;
 }
 
 char *versionChar() {
-    return "1.3";
+    return "1.4";
 }
 
 void showInfo() {
@@ -65,7 +65,7 @@ void showInfo() {
     printf("Options:\n");
     printf("    -v, --version     Shows version\n");
     printf("    -h, --help        Shows this help\n");
-    printf("    update            Checks if an update is available and installs if necassary\n");
+    printf("    -u, --update      Checks if an update is available and installs if necassary\n");
     printf("\n");
     printf("Notes:\n");
     printf("    prfx can only take one file\n");
@@ -279,14 +279,15 @@ int main(int argc, char *argv[]) {
         if (!needsUpdate) {
             // Update
             printf("\nThere is an update available!\n\n");
-            system("cd /usr/local/bin/");
+            //system("cd /usr/local/bin/");
             printf("Updating prfx...\n");
-            system("sudo -v");
-            system("/usr/bin/curl -fsSL -O -s https://raw.github.com/kylefrost/prfx/master/prfx");
-            system("/bin/chmod a+x prfx");
-            printf("\n\nprfx has been updated.\n\n");
-            char *command = concat("cd ", getCurrentFolder());
-            system(command);
+            system("ruby -e \"$(curl -fsSL https://raw.github.com/kylefrost/prfx/master/install)\"");
+            //system("sudo -v");
+            //system("/usr/bin/curl -fsSL -O -s https://raw.github.com/kylefrost/prfx/master/prfx");
+            //system("/bin/chmod a+x prfx");
+            //printf("\n\nprfx has been updated.\n\n");
+            //char *command = concat("cd ", getCurrentFolder());
+            //system(command);
         } else {
             // No updates
             printf("\nThere are no updates available.\n\n");
