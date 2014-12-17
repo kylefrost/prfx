@@ -45,11 +45,11 @@ void usage(char *program) {
 }
 
 float version() {
-    return 1.2;
+    return 1.3;
 }
 
 char *versionChar() {
-    return "1.2";
+    return "1.3";
 }
 
 void showInfo() {
