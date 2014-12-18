@@ -45,11 +45,11 @@ void usage(char *program) {
 }
 
 float version() {
-    return 1.4;
+    return 1.5;
 }
 
 char *versionChar() {
-    return "1.4";
+    return "1.5";
 }
 
 void showInfo() {
@@ -274,13 +274,13 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    if (strcmp(argv[1], "update") == 0) {
+    if (strcmp(argv[1], "-u") == 0 || strcmp(argv[1], "--update") == 0) {
         bool needsUpdate = checkForUpdate();
         if (!needsUpdate) {
             // Update
             printf("\nThere is an update available!\n\n");
             //system("cd /usr/local/bin/");
-            printf("Updating prfx...\n");
+            printf("Updating prfx...\n\n");
             system("ruby -e \"$(curl -fsSL https://raw.github.com/kylefrost/prfx/master/install)\"");
             //system("sudo -v");
             //system("/usr/bin/curl -fsSL -O -s https://raw.github.com/kylefrost/prfx/master/prfx");
