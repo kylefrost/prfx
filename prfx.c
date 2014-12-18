@@ -282,12 +282,6 @@ int main(int argc, char *argv[]) {
             //system("cd /usr/local/bin/");
             printf("Updating prfx...\n\n");
             system("ruby -e \"$(curl -fsSL https://raw.github.com/kylefrost/prfx/master/install)\"");
-            //system("sudo -v");
-            //system("/usr/bin/curl -fsSL -O -s https://raw.github.com/kylefrost/prfx/master/prfx");
-            //system("/bin/chmod a+x prfx");
-            //printf("\n\nprfx has been updated.\n\n");
-            //char *command = concat("cd ", getCurrentFolder());
-            //system(command);
         } else {
             // No updates
             printf("\nThere are no updates available.\n\n");
