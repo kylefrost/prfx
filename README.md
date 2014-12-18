@@ -17,7 +17,7 @@ ruby -e "$(curl -fsSL https://raw.github.com/kylefrost/prfx/master/install)"
 1. Clone the repo using ```git clone https://github.com/kylefrost/prfx.git```
 2. Go to prfx directory: ```cd prfx```
 3. Make ```build.sh``` runnable and build prfx: ```chmod a+x build.sh;./build.sh```
-4. Copy to ```/usr/local/bin```: ```sudo cp /usr/local/bin/```
+4. Copy to ```/usr/local/bin```: ```sudo cp prfx /usr/local/bin/```
 5. Restart terminal session
 
 ## How to Uninstall
