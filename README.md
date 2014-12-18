@@ -43,7 +43,7 @@ Feel free to fork and submit a pull request with a new feature.
 4. Stay classy
 5. Are you still reading these?
 6. I guess I should put something meaningful here
-7. `prfx` was built because I wanted something that did this and it didn't exist
+7. `prfx` was built because I felt like it
 
 ## License
 The MIT License. See [LICENSE](LICENSE).
