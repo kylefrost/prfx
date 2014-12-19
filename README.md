@@ -20,7 +20,26 @@ ruby -e "$(curl -fsSL https://raw.github.com/kylefrost/prfx/master/install)"
 4. Copy to ```/usr/local/bin```: ```sudo cp prfx /usr/local/bin/```
 5. Restart terminal session
 
-## How to Uninstall
+## Update
+#### Automagically
+prfx has update checking built in. Simply run this in your terminal application of choice:
+```bash
+prfx -u
+```
+*or...*
+```bash
+prfx --update
+```
+If an update is available it will prompt to update, otherwise it will inform you no updates are available.
+
+#### Manually
+1. Pull changes: `git pull origin master`
+2. Go to prfx directory: ```cd prfx```
+3. Make ```build.sh``` runnable and build prfx: ```chmod a+x build.sh;./build.sh```
+4. Copy to ```/usr/local/bin```: ```sudo cp prfx /usr/local/bin/```
+5. Restart terminal session
+
+## Uninstall
 #### Automagically
 Run this in **Terminal.app** or your favorite terminal application.
 ```bash
