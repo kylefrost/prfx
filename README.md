@@ -1,3 +1,7 @@
+# This project is no longer supported.
+
+There are better ways of doing this. I mostly built PRFX as a "Can I do it?" project to get refreshed with the C language.
+
 # PRFX
 
 Prounounced "Pr(e)f(i)x".
